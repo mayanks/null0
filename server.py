@@ -185,7 +185,7 @@ _SECURITY_HEADERS = [
     (b"x-frame-options", b"DENY"),
     (b"referrer-policy", b"no-referrer"),
     (b"content-security-policy",
-     b"default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'none'; object-src 'none'"),
+     b"default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; object-src 'none'"),
 ]
 
 
