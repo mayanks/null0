@@ -43,7 +43,7 @@ Add the following to your `claude_desktop_config.json`:
 {
   "mcpServers": {
     "kuvera": {
-      "url": "https://<your-domain>/sse"
+      "url": "https://null0.exe.xyz/sse"
     }
   }
 }
@@ -73,7 +73,7 @@ After editing the file, restart Claude Desktop for the changes to take effect.
 
 Add a new MCP connector with URL:
 ```
-https://<your-domain>/sse
+https://null0.exe.xyz/sse
 ```
 
 ### Generic MCP client
@@ -82,8 +82,8 @@ Two transports are available:
 
 | Transport | URL |
 |---|---|
-| SSE (broader compatibility) | `https://<your-domain>/sse` |
-| Streamable HTTP (newer standard) | `https://<your-domain>/mcp` |
+| SSE (broader compatibility) | `https://null0.exe.xyz/sse` |
+| Streamable HTTP (newer standard) | `https://null0.exe.xyz/mcp` |
 
 ---
 
@@ -110,7 +110,7 @@ Two transports are available:
 - No analytics, no trackers, no cookies.
 - This is a personal, for-fun project with no commercial terms.
 
-Full privacy policy: `https://<your-domain>/privacy`
+Full privacy policy: `https://null0.exe.xyz/privacy`
 
 ---
 
@@ -124,7 +124,7 @@ Full privacy policy: `https://<your-domain>/privacy`
 ### Local setup
 
 ```bash
-git clone <repo-url> kuvera-mcp
+git clone https://github.com/mayanks/null0 kuvera-mcp
 cd kuvera-mcp
 python -m venv .venv
 source .venv/bin/activate
@@ -148,7 +148,7 @@ pytest tests/ -v
 
 ```bash
 # On the exe.dev VM:
-git clone <repo-url> kuvera-mcp
+git clone https://github.com/mayanks/null0 kuvera-mcp
 cd kuvera-mcp
 python -m venv .venv
 source .venv/bin/activate
