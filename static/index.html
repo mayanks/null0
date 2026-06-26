@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="An open-source MCP server that connects Claude, ChatGPT, and other AI assistants to your Kuvera mutual fund portfolio in real time." />
+  <title>Kuvera MCP — Talk to your portfolio with AI</title>
+  <link rel="stylesheet" href="/assets/tailwind.min.css" />
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+
+<!-- =====================================================================
+     Navigation
+====================================================================== -->
+<nav class="fixed top-0 left-0 right-0 z-50 border-b border-gray-800">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between" style="height:4rem">
+      <a href="/" class="font-bold text-xl text-white" style="letter-spacing:-0.02em">
+        Kuvera <span style="color:#6366f1">MCP</span>
+      </a>
+      <div class="flex items-center space-x-6">
+        <a href="/privacy" class="text-sm text-gray-400 hover:text-white transition-colors">Privacy</a>
+        <a href="https://github.com/mayanks/kuvera-mcp" target="_blank" rel="noopener noreferrer"
+           class="text-sm text-gray-400 hover:text-white transition-colors">GitHub</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- =====================================================================
+     Hero
+====================================================================== -->
+<section class="pt-20 pb-16 md:pt-28 md:pb-24" style="background:linear-gradient(180deg,#111827 0%,#0f0f0f 100%)">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <div class="mb-6 flex flex-wrap justify-center gap-2">
+      <span class="badge">For personal use</span>
+      <span class="badge">No data stored</span>
+      <span class="badge">Open source</span>
+    </div>
+    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6" style="line-height:1.1">
+      Talk to your Kuvera portfolio<br />with AI
+    </h1>
+    <p class="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto" style="line-height:1.7">
+      An open-source MCP server that connects Claude, ChatGPT, and other AI assistants
+      to your Kuvera mutual fund portfolio — in real time.
+    </p>
+    <a href="#setup" class="btn-primary">Get started →</a>
+  </div>
+</section>
+
+<!-- =====================================================================
+     What can you ask?
+====================================================================== -->
+<section id="tools" class="py-16 md:py-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-2xl md:text-3xl font-bold text-white text-center mb-4">What can you ask?</h2>
+    <p class="text-gray-400 text-center mb-12 max-w-xl mx-auto">Ask your AI assistant anything about your Kuvera portfolio using natural language.</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <div class="card">
+        <div class="text-3xl mb-3">📊</div>
+        <h3 class="font-semibold text-white mb-2">Check holdings</h3>
+        <p class="text-gray-400 text-sm">List all your mutual fund holdings with units, invested value, and current value.</p>
+      </div>
+
+      <div class="card">
+        <div class="text-3xl mb-3">📈</div>
+        <h3 class="font-semibold text-white mb-2">Portfolio performance</h3>
+        <p class="text-gray-400 text-sm">Get gains, XIRR, and one-day returns across all your portfolios.</p>
+      </div>
+
+      <div class="card">
+        <div class="text-3xl mb-3">🔍</div>
+        <h3 class="font-semibold text-white mb-2">Fund details</h3>
+        <p class="text-gray-400 text-sm">Look up AUM, expense ratio, NAV, category, and historical returns for any fund.</p>
+      </div>
+
+      <div class="card">
+        <div class="text-3xl mb-3">🔄</div>
+        <h3 class="font-semibold text-white mb-2">Switch portfolio</h3>
+        <p class="text-gray-400 text-sm">Switch between your Kuvera portfolios to operate in a different account context.</p>
+      </div>
+
+      <div class="card">
+        <div class="text-3xl mb-3">🔐</div>
+        <h3 class="font-semibold text-white mb-2">Validate session</h3>
+        <p class="text-gray-400 text-sm">Check whether your Kuvera token is still valid before running other queries.</p>
+      </div>
+
+      <div class="card">
+        <div class="text-3xl mb-3">⚖️</div>
+        <h3 class="font-semibold text-white mb-2">Equity breakdown</h3>
+        <p class="text-gray-400 text-sm">See which companies a fund holds and the proportionate value of your investment.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider max-w-7xl mx-auto" />
+
+<!-- =====================================================================
+     How it works
+====================================================================== -->
+<section id="how-it-works" class="py-16 md:py-20">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-2xl md:text-3xl font-bold text-white text-center mb-12">How it works</h2>
+    <div class="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-0">
+
+      <div class="how-step">
+        <div class="how-step-icon">🔑</div>
+        <p class="font-semibold text-white mb-1">Get your token</p>
+        <p class="text-gray-400 text-sm">Copy your Kuvera session JWT from the browser console.</p>
+      </div>
+
+      <div class="how-arrow hidden md:block">→</div>
+
+      <div class="how-step">
+        <div class="how-step-icon">⚙️</div>
+        <p class="font-semibold text-white mb-1">Configure your AI</p>
+        <p class="text-gray-400 text-sm">Point your AI client to the MCP server URL.</p>
+      </div>
+
+      <div class="how-arrow hidden md:block">→</div>
+
+      <div class="how-step">
+        <div class="how-step-icon">💬</div>
+        <p class="font-semibold text-white mb-1">Ask anything</p>
+        <p class="text-gray-400 text-sm">Query your portfolio in plain English.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider max-w-7xl mx-auto" />
+
+<!-- =====================================================================
+     Setup guide (tabbed)
+====================================================================== -->
+<section id="setup" class="py-16 md:py-20">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">Setup guide</h2>
+    <p class="text-gray-400 mb-8">Choose your AI client below and follow the steps.</p>
+
+    <!-- Tab buttons -->
+    <div class="flex gap-1 flex-wrap" role="tablist" id="setup-tabs">
+      <button class="tab-btn active" role="tab" aria-selected="true" data-tab="claude-desktop" onclick="switchTab(this,'claude-desktop')">Claude Desktop</button>
+      <button class="tab-btn" role="tab" aria-selected="false" data-tab="claude-ai" onclick="switchTab(this,'claude-ai')">Claude.ai</button>
+      <button class="tab-btn" role="tab" aria-selected="false" data-tab="generic" onclick="switchTab(this,'generic')">Generic MCP client</button>
+    </div>
+
+    <!-- Tab panels -->
+    <div class="tab-panel-wrapper">
+
+      <!-- Claude Desktop -->
+      <div id="tab-claude-desktop" class="tab-content active">
+        <p class="text-gray-300 mb-4">
+          Claude Desktop only supports <strong>stdio-based</strong> MCP servers natively — it cannot connect directly to an HTTP server using a <code>url</code> field.
+          Instead, use <code>mcp-remote</code>: a lightweight npm package that acts as a stdio bridge to the Kuvera MCP HTTP server.
+          You need Node.js / npm installed, but you do <strong>not</strong> need to install anything separately — <code>npx</code> fetches it automatically.
+        </p>
+
+        <p class="text-gray-400 text-sm mb-2">Open <code>claude_desktop_config.json</code> and add:</p>
+        <pre>{
+  "mcpServers": {
+    "kuvera": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://&lt;your-domain&gt;/sse"]
+    }
+  }
+}</pre>
+        <p class="text-gray-400 text-sm mt-3">Replace <code>&lt;your-domain&gt;</code> with the domain where this server is hosted.</p>
+
+        <p class="text-gray-400 text-sm mt-5 mb-2">If you are running the server <strong>locally</strong> (e.g. for development):</p>
+        <pre>{
+  "mcpServers": {
+    "kuvera": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "http://localhost:8000/sse"]
+    }
+  }
+}</pre>
+
+        <div style="background:#1c1917;border:1px solid #292524;border-radius:0.5rem;padding:1rem 1.25rem;margin-top:1.25rem">
+          <p class="text-yellow-400 font-semibold text-sm mb-1">📁 Config file location</p>
+          <p class="text-gray-400 text-sm">
+            <strong class="text-gray-300">macOS:</strong> <code>~/Library/Application Support/Claude/claude_desktop_config.json</code><br />
+            <strong class="text-gray-300">Windows:</strong> <code>%APPDATA%\Claude\claude_desktop_config.json</code>
+          </p>
+          <p class="text-gray-400 text-sm mt-2">Restart Claude Desktop after saving the file for changes to take effect.</p>
+        </div>
+      </div>
+
+      <!-- Claude.ai -->
+      <div id="tab-claude-ai" class="tab-content">
+        <p class="text-gray-300 mb-4">In Claude.ai, go to <strong>Settings → Integrations → Add integration</strong> and paste the connector URL:</p>
+        <pre>https://&lt;your-domain&gt;/sse</pre>
+        <p class="text-gray-400 text-sm mt-4">Replace <code>&lt;your-domain&gt;</code> with the domain where this server is hosted.</p>
+      </div>
+
+      <!-- Generic -->
+      <div id="tab-generic" class="tab-content">
+        <p class="text-gray-300 mb-4">This server exposes two MCP transport endpoints:</p>
+        <ul class="space-y-3 text-gray-300">
+          <li>
+            <code>/sse</code> — <strong>SSE transport</strong> (Server-Sent Events)<br />
+            <span class="text-gray-400 text-sm">Supported by Claude Desktop and many current MCP clients. GET to establish the stream, POST messages to <code>/sse/messages/</code>.</span>
+          </li>
+          <li>
+            <code>/mcp</code> — <strong>Streamable HTTP transport</strong><br />
+            <span class="text-gray-400 text-sm">Newer standard; fully stateless per request. Supported by clients implementing the latest MCP specification.</span>
+          </li>
+        </ul>
+        <pre class="mt-4">https://&lt;your-domain&gt;/sse    # SSE
+https://&lt;your-domain&gt;/mcp    # Streamable HTTP</pre>
+      </div>
+
+    </div><!-- end tab-panel-wrapper -->
+  </div>
+</section>
+
+<hr class="section-divider max-w-7xl mx-auto" />
+
+<!-- =====================================================================
+     Getting your Kuvera token
+====================================================================== -->
+<section id="token" class="py-16 md:py-20">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">Getting your Kuvera token</h2>
+    <p class="text-gray-400 mb-8">Your Kuvera session token lives in your browser's localStorage after you log in. Here's how to retrieve it:</p>
+
+    <ol class="steps-list">
+      <li>
+        <div>
+          <p class="text-gray-200 font-medium">Log in to kuvera.in in your browser</p>
+          <p class="text-gray-400 text-sm mt-1">Use any browser — Chrome, Firefox, or Edge.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <p class="text-gray-200 font-medium">Open the browser DevTools Console</p>
+          <p class="text-gray-400 text-sm mt-1">Press <code>F12</code> (or <code>Cmd+Option+J</code> on Mac) and click the <strong>Console</strong> tab.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <p class="text-gray-200 font-medium">Paste and run this command</p>
+          <pre class="mt-2">localStorage.getItem('vue-authenticate.vueauth_token')</pre>
+        </div>
+      </li>
+      <li>
+        <div>
+          <p class="text-gray-200 font-medium">Copy the returned string</p>
+          <p class="text-gray-400 text-sm mt-1">It will look like a long string of three dot-separated segments. That's your JWT token.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <p class="text-gray-200 font-medium">Paste it when your AI assistant asks</p>
+          <p class="text-gray-400 text-sm mt-1">The AI will ask for it the first time you use a Kuvera tool. You can validate it with the <em>validateToken</em> tool.</p>
+        </div>
+      </li>
+    </ol>
+
+    <div style="background:#1c1917;border:1px solid #292524;border-radius:0.5rem;padding:1rem 1.25rem;margin-top:1.5rem">
+      <p class="text-yellow-400 font-semibold text-sm mb-1">⚠️ Token expiry</p>
+      <p class="text-gray-400 text-sm">The token expires with your browser session. If a tool returns an error, re-fetch the token and paste it again.</p>
+    </div>
+
+    <div style="background:#1e1b4b;border:1px solid #312e81;border-radius:0.5rem;padding:1rem 1.25rem;margin-top:1rem">
+      <p class="text-indigo-300 font-semibold text-sm mb-1">🔐 Security note</p>
+      <p class="text-gray-400 text-sm">This token grants full read and transaction access to your Kuvera account. If you believe it has been compromised, <strong class="text-gray-300">log out of kuvera.in immediately</strong> to invalidate it.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider max-w-7xl mx-auto" />
+
+<!-- =====================================================================
+     Privacy at a glance
+====================================================================== -->
+<section id="privacy" class="py-16 md:py-20">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">Privacy at a glance</h2>
+    <ul class="space-y-4 mb-8">
+      <li class="flex items-start gap-3">
+        <span class="text-green-400 text-lg mt-0.5">✓</span>
+        <span class="text-gray-300">Your token is used ephemerally for a single API call and discarded immediately — never written to disk, logs, or any database.</span>
+      </li>
+      <li class="flex items-start gap-3">
+        <span class="text-green-400 text-lg mt-0.5">✓</span>
+        <span class="text-gray-300">No Kuvera portfolio data, account data, or personal financial information is stored server-side.</span>
+      </li>
+      <li class="flex items-start gap-3">
+        <span class="text-green-400 text-lg mt-0.5">✓</span>
+        <span class="text-gray-300">JWT patterns are automatically redacted from application logs — including exception stack traces.</span>
+      </li>
+      <li class="flex items-start gap-3">
+        <span class="text-green-400 text-lg mt-0.5">✓</span>
+        <span class="text-gray-300">No cookies, no analytics, no third-party trackers. Tailwind CSS is self-hosted — no external CDN requests.</span>
+      </li>
+    </ul>
+    <a href="/privacy" class="text-indigo-400 hover:text-indigo-300 transition-colors text-sm font-medium">Read the full privacy policy →</a>
+  </div>
+</section>
+
+<!-- =====================================================================
+     Footer
+====================================================================== -->
+<footer class="py-8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
+    <p>Built for fun · Not affiliated with Kuvera · <a href="https://github.com/mayanks/kuvera-mcp" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 transition-colors">Open source on GitHub</a></p>
+  </div>
+</footer>
+
+<!-- =====================================================================
+     Tab switching (vanilla JS — no external scripts)
+====================================================================== -->
+<script>
+function switchTab(btn, tabId) {
+  var tabs = document.querySelectorAll('#setup-tabs .tab-btn');
+  tabs.forEach(function(t) {
+    t.classList.remove('active');
+    t.setAttribute('aria-selected', 'false');
+  });
+  btn.classList.add('active');
+  btn.setAttribute('aria-selected', 'true');
+
+  var panels = document.querySelectorAll('.tab-content');
+  panels.forEach(function(p) { p.classList.remove('active'); });
+  var target = document.getElementById('tab-' + tabId);
+  if (target) target.classList.add('active');
+}
+</script>
+
+</body>
+</html>
