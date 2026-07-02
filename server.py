@@ -356,6 +356,22 @@ session_manager = StreamableHTTPSessionManager(
 )
 
 
+class _StreamableHTTPApp:
+    """Thin ASGI wrapper so Route (not Mount) dispatches /mcp correctly.
+
+    Mount strips the path prefix before calling the app, and may not match
+    the exact path /mcp with no trailing slash. Using Route + this wrapper
+    avoids both issues: Route matches /mcp exactly and passes the full
+    scope unchanged to handle_request.
+    """
+
+    def __init__(self, manager: StreamableHTTPSessionManager) -> None:
+        self._manager = manager
+
+    async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
+        await self._manager.handle_request(scope, receive, send)
+
+
 # ---------------------------------------------------------------------------
 # Starlette app assembly
 # ---------------------------------------------------------------------------
@@ -369,8 +385,8 @@ routes = [
     # SSE transport: GET /sse establishes stream, POST /sse/messages/ sends messages
     Route("/sse", endpoint=handle_sse, methods=["GET"]),
     Mount("/sse/messages", app=sse_transport.handle_post_message),
-    # StreamableHTTP transport — handle_request is an ASGI app
-    Mount("/mcp", app=session_manager.handle_request),
+    # StreamableHTTP transport — Route (not Mount) so /mcp is matched exactly
+    Route("/mcp", endpoint=_StreamableHTTPApp(session_manager)),
     # Static files (must come last — catches all remaining paths)
     Mount("/", app=CachedStaticFiles(directory="static", html=True)),
 ]
