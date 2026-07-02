@@ -31,7 +31,7 @@
 <!-- =====================================================================
      Hero
 ====================================================================== -->
-<section class="pt-20 pb-16 md:pt-28 md:pb-24" style="background:linear-gradient(180deg,#111827 0%,#0f0f0f 100%)">
+<section class="mt-16 pt-4 pb-16 md:pt-12 md:pb-24" style="background:linear-gradient(180deg,#111827 0%,#0f0f0f 100%)">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
     <div class="mb-6 flex flex-wrap justify-center gap-2">
       <span class="badge">For personal use</span>
@@ -42,7 +42,7 @@
       Talk to your Kuvera portfolio<br />with AI
     </h1>
     <p class="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto" style="line-height:1.7">
-      An open-source MCP server that connects Claude, ChatGPT, and other AI assistants
+      An open-source <abbr title="Model Context Protocol — a standard way for AI assistants to connect to external tools and data sources" class="cursor-help border-b border-dotted border-gray-500">MCP</abbr> server that connects Claude, ChatGPT, and other AI assistants
       to your Kuvera mutual fund portfolio — in real time.
     </p>
     <a href="#setup" class="btn-primary">Get started →</a>
@@ -144,10 +144,15 @@
     <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">Setup guide</h2>
     <p class="text-gray-400 mb-8">Choose your AI client below and follow the steps.</p>
 
+    <p class="text-gray-400 text-sm mb-6">
+      <strong class="text-gray-300">Public server:</strong> This server is hosted at <code>https://null0.exe.xyz</code> — free to use, no authentication required.
+    </p>
+
     <!-- Tab buttons -->
     <div class="flex gap-1 flex-wrap" role="tablist" id="setup-tabs">
       <button class="tab-btn active" role="tab" aria-selected="true" data-tab="claude-desktop">Claude Desktop</button>
       <button class="tab-btn" role="tab" aria-selected="false" data-tab="claude-ai">Claude.ai</button>
+      <button class="tab-btn" role="tab" aria-selected="false" data-tab="chatgpt">ChatGPT</button>
       <button class="tab-btn" role="tab" aria-selected="false" data-tab="generic">Generic MCP client</button>
     </div>
 
@@ -171,7 +176,7 @@
     }
   }
 }</pre>
-        <p class="text-gray-400 text-sm mt-3">Replace <code>null0.exe.xyz</code> with the domain where this server is hosted.</p>
+        <p class="text-gray-400 text-sm mt-3">For self-hosting, replace <code>null0.exe.xyz</code> with your own domain.</p>
 
         <p class="text-gray-400 text-sm mt-5 mb-2">If you are running the server <strong>locally</strong> (e.g. for development):</p>
         <pre>{
@@ -197,7 +202,17 @@
       <div id="tab-claude-ai" class="tab-content">
         <p class="text-gray-300 mb-4">In Claude.ai, go to <strong>Settings → Integrations → Add integration</strong> and paste the connector URL:</p>
         <pre>https://null0.exe.xyz/sse</pre>
-        <p class="text-gray-400 text-sm mt-4">Replace <code>null0.exe.xyz</code> with the domain where this server is hosted.</p>
+        <p class="text-gray-400 text-sm mt-4">For self-hosting, replace <code>null0.exe.xyz</code> with your own domain.</p>
+      </div>
+
+      <!-- ChatGPT -->
+      <div id="tab-chatgpt" class="tab-content">
+        <p class="text-gray-300 mb-4">
+          ChatGPT supports MCP servers through its <strong>Connectors</strong> feature. This is available in ChatGPT Team and Enterprise plans.
+        </p>
+        <p class="text-gray-300 mb-4">Go to <strong>Settings → Connectors → Add connector</strong> and enter:</p>
+        <pre>https://null0.exe.xyz/mcp</pre>
+        <p class="text-gray-400 text-sm mt-4">Use the <code>/mcp</code> endpoint (Streamable HTTP transport) for ChatGPT compatibility.</p>
       </div>
 
       <!-- Generic -->
@@ -218,6 +233,16 @@ https://null0.exe.xyz/mcp    # Streamable HTTP</pre>
       </div>
 
     </div><!-- end tab-panel-wrapper -->
+
+    <div style="background:#1e1b4b;border:1px solid #312e81;border-radius:0.5rem;padding:1rem 1.25rem;margin-top:1.5rem">
+      <p class="text-indigo-300 font-semibold text-sm mb-2">💬 Try asking your AI assistant:</p>
+      <ul class="text-gray-300 text-sm space-y-1">
+        <li>"How is my investment doing today?"</li>
+        <li>"Are there any overlaps in the funds that I have invested in?"</li>
+        <li>"What's my XIRR across all portfolios?"</li>
+        <li>"Which stocks am I indirectly exposed to through my mutual funds?"</li>
+      </ul>
+    </div>
   </div>
 </section>
 
@@ -311,7 +336,7 @@ https://null0.exe.xyz/mcp    # Streamable HTTP</pre>
 ====================================================================== -->
 <footer class="py-8">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
-    <p>Built for fun · Not affiliated with Kuvera · <a href="https://github.com/mayanks/null0" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 transition-colors">Open source on GitHub</a></p>
+    <p>Built for fun · Not affiliated with Kuvera · <a href="/about" class="text-indigo-400 hover:text-indigo-300 transition-colors">About</a> · <a href="https://github.com/mayanks/null0" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 transition-colors">Open source on GitHub</a></p>
   </div>
 </footer>
 
