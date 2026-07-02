@@ -46,6 +46,14 @@
       to your Kuvera mutual fund portfolio — in real time.
     </p>
     <a href="#setup" class="btn-primary">Get started →</a>
+
+    <div class="mt-12 mx-auto" style="max-width:680px">
+      <img
+        src="/assets/images/null-chatgpt-session.png"
+        alt="Claude responding to 'how is my portfolio doing' with fund holdings, current value, and 1-week returns"
+        class="screenshot-hero"
+      />
+    </div>
   </div>
 </section>
 
@@ -203,6 +211,12 @@
         <p class="text-gray-300 mb-4">In Claude.ai, go to <strong>Settings → Integrations → Add integration</strong> and paste the connector URL:</p>
         <pre>https://null0.exe.xyz/sse</pre>
         <p class="text-gray-400 text-sm mt-4">For self-hosting, replace <code>null0.exe.xyz</code> with your own domain.</p>
+        <p class="text-gray-400 text-sm mt-5 mb-2">Once added, open the <strong>Connectors</strong> popover to confirm <strong>kuvera</strong> appears with the toggle enabled:</p>
+        <img
+          src="/assets/images/null-chatgpt.png"
+          alt="Claude.ai connectors popover showing kuvera listed and enabled"
+          class="screenshot-inline"
+        />
       </div>
 
       <!-- ChatGPT -->
@@ -273,6 +287,11 @@ https://null0.exe.xyz/mcp    # Streamable HTTP</pre>
         <div>
           <p class="text-gray-200 font-medium">Paste and run this command</p>
           <pre class="mt-2">localStorage.getItem('vue-authenticate.vueauth_token')</pre>
+          <img
+            src="/assets/images/null-vueauth-token.png"
+            alt="Browser DevTools Console showing the localStorage.getItem command and the returned JWT token"
+            class="screenshot-inline mt-3"
+          />
         </div>
       </li>
       <li>
@@ -322,10 +341,10 @@ https://null0.exe.xyz/mcp    # Streamable HTTP</pre>
         <span class="text-green-400 text-lg mt-0.5">✓</span>
         <span class="text-gray-300">JWT patterns are automatically redacted from application logs — including exception stack traces.</span>
       </li>
-      <li class="flex items-start gap-3">
-        <span class="text-green-400 text-lg mt-0.5">✓</span>
-        <span class="text-gray-300">No cookies, no analytics, no third-party trackers. Tailwind CSS is self-hosted — no external CDN requests.</span>
-      </li>
+        <li class="flex items-start gap-3">
+          <span class="text-green-400 text-lg mt-0.5">✓</span>
+          <span class="text-gray-300">No cookies, no analytics, no third-party trackers.</span>
+        </li>
     </ul>
     <a href="/privacy" class="text-indigo-400 hover:text-indigo-300 transition-colors text-sm font-medium">Read the full privacy policy →</a>
   </div>

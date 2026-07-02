@@ -233,6 +233,23 @@ nav {
   margin: 0 0.5rem;
 }
 
+/* ---- Screenshots ---- */
+.screenshot-hero {
+  border-radius: 0.75rem;
+  border: 1px solid #1f2937;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+  width: 100%;
+  display: block;
+}
+
+.screenshot-inline {
+  border-radius: 0.5rem;
+  border: 1px solid #374151;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  max-width: 100%;
+  display: block;
+}
+
 /* ---- Footer ---- */
 footer {
   background-color: #111827;
