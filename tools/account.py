@@ -82,6 +82,11 @@ async def handle_validate_token(
     token = arguments.get("token", "")
     if not KuveraClient.validate_jwt_format(token):
         return _content("Error: Invalid token format. Please provide a valid Kuvera JWT token.")
+
+    payload = KuveraClient.decode_jwt_payload(token)
+    if payload:
+        logger.info("JWT payload: %s", json.dumps(payload))
+
     account = await client.get_account_info(token)
     return _content("true" if account else "false")
 

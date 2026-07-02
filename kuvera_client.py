@@ -3,6 +3,9 @@ Kuvera API client — all httpx calls are centralised here.
 No tool module may import httpx directly.
 """
 
+import base64
+import datetime
+import json
 import logging
 import math
 import re
@@ -73,6 +76,20 @@ class KuveraClient:
     # ------------------------------------------------------------------
     # Static helpers
     # ------------------------------------------------------------------
+
+    @staticmethod
+    def decode_jwt_payload(token: str) -> dict[str, Any] | None:
+        """Decode the JWT payload without verifying the signature.
+
+        Returns the claims dict, or None if the token is malformed.
+        """
+        try:
+            payload_b64 = token.split(".")[1]
+            # base64url — pad to a multiple of 4
+            padded = payload_b64 + "=" * (-len(payload_b64) % 4)
+            return json.loads(base64.urlsafe_b64decode(padded))
+        except Exception:
+            return None
 
     @staticmethod
     def validate_jwt_format(token: str) -> bool:
