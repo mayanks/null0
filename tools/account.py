@@ -85,7 +85,7 @@ async def handle_validate_token(
 
     payload = KuveraClient.decode_jwt_payload(token)
     if payload:
-        logger.info("JWT payload: %s", json.dumps(payload))
+        logger.info("JWT payload: {}", json.dumps(payload))
 
     account = await client.get_account_info(token)
     return _content("true" if account else "false")

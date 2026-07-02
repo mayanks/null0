@@ -172,7 +172,7 @@ class KuveraClient:
             }
         except httpx.HTTPStatusError as exc:
             logger.warning(
-                "Kuvera API error: HTTP %s on %s",
+                "Kuvera API error: HTTP {} on {}",
                 exc.response.status_code,
                 exc.request.url.path,
             )
@@ -234,7 +234,7 @@ class KuveraClient:
             return portfolios
         except httpx.HTTPStatusError as exc:
             logger.warning(
-                "Kuvera API error: HTTP %s on %s",
+                "Kuvera API error: HTTP {} on {}",
                 exc.response.status_code,
                 exc.request.url.path,
             )
@@ -277,7 +277,7 @@ class KuveraClient:
             return result
         except httpx.HTTPStatusError as exc:
             logger.warning(
-                "Kuvera API error: HTTP %s on %s",
+                "Kuvera API error: HTTP {} on {}",
                 exc.response.status_code,
                 exc.request.url.path,
             )
@@ -301,7 +301,7 @@ class KuveraClient:
             data = response.json()
         except httpx.HTTPStatusError as exc:
             logger.warning(
-                "Kuvera API error: HTTP %s on %s",
+                "Kuvera API error: HTTP {} on {}",
                 exc.response.status_code,
                 exc.request.url.path,
             )
@@ -366,7 +366,7 @@ class KuveraClient:
             ]
         except httpx.HTTPStatusError as exc:
             logger.warning(
-                "Kuvera API error: HTTP %s on %s",
+                "Kuvera API error: HTTP {} on {}",
                 exc.response.status_code,
                 exc.request.url.path,
             )
@@ -411,7 +411,7 @@ class KuveraClient:
             ]
         except httpx.HTTPStatusError as exc:
             logger.warning(
-                "Kuvera API error: HTTP %s on %s",
+                "Kuvera API error: HTTP {} on {}",
                 exc.response.status_code,
                 exc.request.url.path,
             )
@@ -438,7 +438,7 @@ class KuveraClient:
             return {"success": True, "data": response.json()}
         except httpx.HTTPStatusError as exc:
             logger.warning(
-                "Kuvera API error: HTTP %s on %s",
+                "Kuvera API error: HTTP {} on {}",
                 exc.response.status_code,
                 exc.request.url.path,
             )
