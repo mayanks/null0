@@ -3,15 +3,15 @@ Account tools: validateToken, getAccountInformation.
 """
 
 import json
-import logging
 from typing import Any
+
+from loguru import logger
 
 import mcp.server.lowlevel
 import mcp.types as types
 
 from kuvera_client import KuveraClient
 
-logger = logging.getLogger(__name__)
 
 
 def register(server: mcp.server.lowlevel.Server, client: KuveraClient) -> None:

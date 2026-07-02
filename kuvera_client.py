@@ -4,7 +4,6 @@ No tool module may import httpx directly.
 """
 
 import base64
-import datetime
 import json
 import logging
 import math
@@ -14,7 +13,7 @@ from typing import Any
 
 import httpx
 
-logger = logging.getLogger(__name__)
+from loguru import logger
 
 # ---------------------------------------------------------------------------
 # Token redaction — must be imported early and applied to the root logger

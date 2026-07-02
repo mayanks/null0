@@ -12,11 +12,37 @@ Single-worker requirement:
 """
 
 # ---------------------------------------------------------------------------
-# Step 1: Apply TokenRedactionFilter to root logger — BEFORE anything else
+# Step 1: Configure loguru — BEFORE anything else
 # ---------------------------------------------------------------------------
 import logging
+import sys
 
-from kuvera_client import TokenRedactionFilter
+from loguru import logger as _loguru_logger
+
+from kuvera_client import JWT_PATTERN, TokenRedactionFilter
+
+
+def _redact(record: dict) -> bool:
+    """Loguru filter: scrub JWT-shaped strings from log messages."""
+    record["message"] = JWT_PATTERN.sub("[REDACTED]", record["message"])
+    return True
+
+
+# Intercept stdlib logging (uvicorn, MCP SDK, etc.) and forward to loguru
+class _InterceptHandler(logging.Handler):
+    def emit(self, record: logging.LogRecord) -> None:
+        try:
+            level = _loguru_logger.level(record.levelname).name
+        except ValueError:
+            level = record.levelno
+        frame, depth = sys._getframe(6), 6
+        while frame and frame.f_code.co_filename == logging.__file__:
+            frame = frame.f_back
+            depth += 1
+        _loguru_logger.opt(depth=depth, exception=record.exc_info).log(
+            level, record.getMessage()
+        )
+
 
 _redaction_filter = TokenRedactionFilter()
 logging.getLogger().addFilter(_redaction_filter)
@@ -27,7 +53,6 @@ logging.getLogger().addFilter(_redaction_filter)
 import contextlib
 import json
 import os
-import sys
 import time
 from typing import Any, AsyncIterator
 
@@ -35,10 +60,10 @@ import httpx
 import mcp.server.lowlevel as _lowlevel
 import mcp.types as types
 from dotenv import load_dotenv
+from loguru import logger
 from mcp.server.lowlevel import Server
 from mcp.server.sse import SseServerTransport
 from mcp.server.streamable_http_manager import StreamableHTTPSessionManager
-from pythonjsonlogger import jsonlogger
 from slowapi import Limiter
 from slowapi.errors import RateLimitExceeded
 from slowapi.util import get_remote_address
@@ -78,26 +103,35 @@ from kuvera_client import KuveraClient
 load_dotenv()
 
 # ---------------------------------------------------------------------------
-# Structured JSON logging configuration
+# Loguru configuration
 # ---------------------------------------------------------------------------
 
 _log_level = os.environ.get("LOG_LEVEL", "INFO").upper()
+_log_file = os.environ.get("LOG_FILE", "logs/kuvera-mcp.log")
+os.makedirs(os.path.dirname(_log_file), exist_ok=True)
 
-_handler = logging.StreamHandler()
-_formatter = jsonlogger.JsonFormatter(
-    fmt="%(asctime)s %(levelname)s %(name)s %(message)s",
-    rename_fields={"asctime": "timestamp", "levelname": "level", "name": "logger"},
+# Remove loguru's default stderr sink and add our own sinks
+_loguru_logger.remove()
+_loguru_logger.add(
+    sys.stderr,
+    level=_log_level,
+    format="{time:YYYY-MM-DD HH:mm:ss.SSS} | {level:<8} | {name}:{function}:{line} - {message}",
+    filter=_redact,
+    colorize=True,
 )
-_handler.setFormatter(_formatter)
-_handler.addFilter(_redaction_filter)
+_loguru_logger.add(
+    _log_file,
+    level=_log_level,
+    format="{time:YYYY-MM-DD HH:mm:ss.SSS} | {level:<8} | {name}:{function}:{line} - {message}",
+    filter=_redact,
+    rotation="10 MB",
+    retention=5,
+    compression="gz",
+    enqueue=True,
+)
 
-_root_logger = logging.getLogger()
-_root_logger.setLevel(_log_level)
-# Remove default handlers, add our JSON handler
-_root_logger.handlers.clear()
-_root_logger.addHandler(_handler)
-
-logger = logging.getLogger(__name__)
+# Redirect stdlib logging (uvicorn, MCP SDK) into loguru
+logging.basicConfig(handlers=[_InterceptHandler()], level=0, force=True)
 
 # ---------------------------------------------------------------------------
 # Startup validation — KUVERA_API_BASE_URL must be exactly this value

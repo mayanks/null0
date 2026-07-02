@@ -3,15 +3,14 @@ Portfolio tools: getPortfolios, getPortfolioPerformance, switchPortfolio.
 """
 
 import json
-import logging
 import re
 from typing import Any
+
+from loguru import logger
 
 import mcp.types as types
 
 from kuvera_client import KuveraClient
-
-logger = logging.getLogger(__name__)
 
 _PORTFOLIO_ID_RE = re.compile(r"^\d{1,10}$")
 

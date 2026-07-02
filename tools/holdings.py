@@ -3,14 +3,13 @@ Holdings tool: getHoldings.
 """
 
 import json
-import logging
 from typing import Any
+
+from loguru import logger
 
 import mcp.types as types
 
 from kuvera_client import KuveraClient
-
-logger = logging.getLogger(__name__)
 
 TOOL_GET_HOLDINGS = types.Tool(
     name="getHoldings",

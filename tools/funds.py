@@ -3,16 +3,15 @@ Fund tools: getFundDetails, getEquityDistribution.
 """
 
 import json
-import logging
 import math
 import re
 from typing import Any
 
+from loguru import logger
+
 import mcp.types as types
 
 from kuvera_client import KuveraClient
-
-logger = logging.getLogger(__name__)
 
 _FUND_CODE_RE = re.compile(r"^[A-Z0-9\-]{1,20}$")
 
