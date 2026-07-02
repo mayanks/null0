@@ -153,7 +153,7 @@
     <p class="text-gray-400 mb-8">Choose your AI client below and follow the steps.</p>
 
     <p class="text-gray-400 text-sm mb-6">
-      <strong class="text-gray-300">Public server:</strong> This server is hosted at <code>https://null0.exe.xyz</code> — free to use, no authentication required.
+      <strong class="text-gray-300">Public server:</strong> This server is hosted at <code data-server-url="https://SERVER_HOST"></code> — free to use, no authentication required.
     </p>
 
     <!-- Tab buttons -->
@@ -180,11 +180,11 @@
   "mcpServers": {
     "kuvera": {
       "command": "npx",
-      "args": ["-y", "mcp-remote", "https://null0.exe.xyz/sse"]
+      "args": ["-y", "mcp-remote", "<span data-server-url="https://SERVER_HOST/sse"></span>"]
     }
   }
 }</pre>
-        <p class="text-gray-400 text-sm mt-3">For self-hosting, replace <code>null0.exe.xyz</code> with your own domain.</p>
+        <p class="text-gray-400 text-sm mt-3">For self-hosting, change <code>SERVER_HOST</code> in <code>assets/app.js</code>.</p>
 
         <p class="text-gray-400 text-sm mt-5 mb-2">If you are running the server <strong>locally</strong> (e.g. for development):</p>
         <pre>{
@@ -209,8 +209,8 @@
       <!-- Claude.ai -->
       <div id="tab-claude-ai" class="tab-content">
         <p class="text-gray-300 mb-4">In Claude.ai, go to <strong>Settings → Integrations → Add integration</strong> and paste the connector URL:</p>
-        <pre>https://null0.exe.xyz/sse</pre>
-        <p class="text-gray-400 text-sm mt-4">For self-hosting, replace <code>null0.exe.xyz</code> with your own domain.</p>
+        <pre data-server-url="https://SERVER_HOST/sse"></pre>
+        <p class="text-gray-400 text-sm mt-4">For self-hosting, change <code>SERVER_HOST</code> in <code>assets/app.js</code>.</p>
         <p class="text-gray-400 text-sm mt-5 mb-2">Once added, open the <strong>Connectors</strong> popover to confirm <strong>kuvera</strong> appears with the toggle enabled:</p>
         <img
           src="/assets/images/null-chatgpt.png"
@@ -225,7 +225,7 @@
           ChatGPT supports MCP servers through its <strong>Connectors</strong> feature. This is available in ChatGPT Team and Enterprise plans.
         </p>
         <p class="text-gray-300 mb-4">Go to <strong>Settings → Connectors → Add connector</strong> and enter:</p>
-        <pre>https://null0.exe.xyz/mcp</pre>
+        <pre data-server-url="https://SERVER_HOST/mcp"></pre>
         <p class="text-gray-400 text-sm mt-4">Use the <code>/mcp</code> endpoint (Streamable HTTP transport) for ChatGPT compatibility.</p>
       </div>
 
@@ -242,8 +242,7 @@
             <span class="text-gray-400 text-sm">Newer standard; fully stateless per request. Supported by clients implementing the latest MCP specification.</span>
           </li>
         </ul>
-        <pre class="mt-4">https://null0.exe.xyz/sse    # SSE
-https://null0.exe.xyz/mcp    # Streamable HTTP</pre>
+        <pre class="mt-4" data-server-url="https://SERVER_HOST/sse    # SSE&#10;https://SERVER_HOST/mcp    # Streamable HTTP"></pre>
       </div>
 
     </div><!-- end tab-panel-wrapper -->

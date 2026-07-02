@@ -43,7 +43,7 @@ Add the following to your `claude_desktop_config.json`:
 {
   "mcpServers": {
     "kuvera": {
-      "url": "https://null0.exe.xyz/sse"
+      "url": "https://kuvera.mayanks.me/sse"
     }
   }
 }
@@ -73,7 +73,7 @@ After editing the file, restart Claude Desktop for the changes to take effect.
 
 Add a new MCP connector with URL:
 ```
-https://null0.exe.xyz/sse
+https://kuvera.mayanks.me/sse
 ```
 
 ### Generic MCP client
@@ -82,8 +82,8 @@ Two transports are available:
 
 | Transport | URL |
 |---|---|
-| SSE (broader compatibility) | `https://null0.exe.xyz/sse` |
-| Streamable HTTP (newer standard) | `https://null0.exe.xyz/mcp` |
+| SSE (broader compatibility) | `https://kuvera.mayanks.me/sse` |
+| Streamable HTTP (newer standard) | `https://kuvera.mayanks.me/mcp` |
 
 ---
 
@@ -110,7 +110,7 @@ Two transports are available:
 - No analytics, no trackers, no cookies.
 - This is a personal, for-fun project with no commercial terms.
 
-Full privacy policy: `https://null0.exe.xyz/privacy`
+Full privacy policy: `https://kuvera.mayanks.me/privacy`
 
 ---
 
