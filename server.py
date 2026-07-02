@@ -279,6 +279,12 @@ async def privacy_page(request: Request) -> Response:
     return FileResponse("static/privacy.html")
 
 
+async def about_page(request: Request) -> Response:
+    """Serve about.html at /about."""
+    from starlette.responses import FileResponse
+    return FileResponse("static/about.html")
+
+
 # ---------------------------------------------------------------------------
 # Lifespan — httpx.AsyncClient + session manager lifecycle
 # ---------------------------------------------------------------------------
@@ -346,13 +352,8 @@ async def handle_sse(request: Request) -> Response:
 session_manager = StreamableHTTPSessionManager(
     app=mcp_server,
     json_response=False,
-    stateless=False,
+    stateless=True,
 )
-
-
-async def handle_mcp(scope: Scope, receive: Receive, send: Send) -> None:
-    """Delegate to StreamableHTTPSessionManager."""
-    await session_manager.handle_request(scope, receive, send)
 
 
 # ---------------------------------------------------------------------------
@@ -362,13 +363,14 @@ async def handle_mcp(scope: Scope, receive: Receive, send: Send) -> None:
 # Route order: health → sse → mcp → static
 routes = [
     Route("/health", endpoint=health, methods=["GET"]),
-    # /privacy served explicitly — StaticFiles html=True only serves index.html for /
+    # /privacy and /about served explicitly — StaticFiles html=True only serves index.html for /
     Route("/privacy", endpoint=privacy_page, methods=["GET"]),
+    Route("/about", endpoint=about_page, methods=["GET"]),
     # SSE transport: GET /sse establishes stream, POST /sse/messages/ sends messages
     Route("/sse", endpoint=handle_sse, methods=["GET"]),
     Mount("/sse/messages", app=sse_transport.handle_post_message),
-    # StreamableHTTP transport
-    Mount("/mcp", app=handle_mcp),
+    # StreamableHTTP transport — handle_request is an ASGI app
+    Mount("/mcp", app=session_manager.handle_request),
     # Static files (must come last — catches all remaining paths)
     Mount("/", app=CachedStaticFiles(directory="static", html=True)),
 ]

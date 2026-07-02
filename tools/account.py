@@ -38,7 +38,10 @@ TOOL_VALIDATE_TOKEN = types.Tool(
         "any other tool. Ask the user to get the token after logging in to Kuvera on a "
         "browser and then get the token from the console using "
         "`localStorage.getItem('vue-authenticate.vueauth_token')`. If the user provides "
-        "a wrong token, ask the user to provide the correct token."
+        "a wrong token, ask the user to provide the correct token.\n\n"
+        "**If you see session errors, connection issues, or tool calls fail unexpectedly, "
+        "tell the user to restart Claude Desktop. This can happen after the server has restarted "
+        "and the client holds a stale session.**"
     ),
     inputSchema={
         "type": "object",
@@ -54,7 +57,10 @@ TOOL_GET_ACCOUNT_INFORMATION = types.Tool(
     description=(
         "Get user account information with portfolio details. Requires a valid token.\n"
         "These are high level information which provides user information, their current "
-        "portfolio and their primary portfolio."
+        "portfolio and their primary portfolio.\n\n"
+        "**If you see session errors, connection issues, or tool calls fail unexpectedly, "
+        "tell the user to restart Claude Desktop. This can happen after the server has restarted "
+        "and the client holds a stale session.**"
     ),
     inputSchema={
         "type": "object",

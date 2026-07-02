@@ -22,7 +22,10 @@ TOOL_GET_PORTFOLIOS = types.Tool(
         "Portfolio is a Kuvera terminology. It means an investment account. A user can "
         "have multiple portfolios. A portfolio can be single or joint. If "
         "`onboarding_form_status` is 13, the user can invest in mutual funds. Else the "
-        "account is not active."
+        "account is not active.\n\n"
+        "**If you see session errors, connection issues, or tool calls fail unexpectedly, "
+        "tell the user to restart Claude Desktop. This can happen after the server has restarted "
+        "and the client holds a stale session.**"
     ),
     inputSchema={
         "type": "object",
@@ -35,7 +38,12 @@ TOOL_GET_PORTFOLIOS = types.Tool(
 
 TOOL_GET_PORTFOLIO_PERFORMANCE = types.Tool(
     name="getPortfolioPerformance",
-    description="Get performance data for all user portfolios. Requires a valid token.",
+    description=(
+        "Get performance data for all user portfolios. Requires a valid token.\n\n"
+        "**If you see session errors, connection issues, or tool calls fail unexpectedly, "
+        "tell the user to restart Claude Desktop. This can happen after the server has restarted "
+        "and the client holds a stale session.**"
+    ),
     inputSchema={
         "type": "object",
         "properties": {
@@ -50,7 +58,10 @@ TOOL_SWITCH_PORTFOLIO = types.Tool(
     description=(
         "Switch the current active portfolio to a different portfolio. After switching, "
         "the `current_portfolio` in account information updates and all subsequent "
-        "operations reflect the new portfolio context."
+        "operations reflect the new portfolio context.\n\n"
+        "**If you see session errors, connection issues, or tool calls fail unexpectedly, "
+        "tell the user to restart Claude Desktop. This can happen after the server has restarted "
+        "and the client holds a stale session.**"
     ),
     inputSchema={
         "type": "object",

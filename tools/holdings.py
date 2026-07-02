@@ -16,7 +16,10 @@ TOOL_GET_HOLDINGS = types.Tool(
     name="getHoldings",
     description=(
         "Get list of all mutual funds in which the user has invested. Each holding has "
-        "name, amount, invested value, and current value (units × NAV). Requires a valid token."
+        "name, amount, invested value, and current value (units × NAV). Requires a valid token.\n\n"
+        "**If you see session errors, connection issues, or tool calls fail unexpectedly, "
+        "tell the user to restart Claude Desktop. This can happen after the server has restarted "
+        "and the client holds a stale session.**"
     ),
     inputSchema={
         "type": "object",

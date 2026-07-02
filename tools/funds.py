@@ -21,7 +21,10 @@ TOOL_GET_FUND_DETAILS = types.Tool(
     description=(
         "Get details of a mutual fund. Provide a list of fund codes and a valid token. "
         "Returns AUM, category, code, expense ratio, name, NAV, NAV date, returns, and "
-        "volatility for each fund."
+        "volatility for each fund.\n\n"
+        "**If you see session errors, connection issues, or tool calls fail unexpectedly, "
+        "tell the user to restart Claude Desktop. This can happen after the server has restarted "
+        "and the client holds a stale session.**"
     ),
     inputSchema={
         "type": "object",
@@ -41,7 +44,10 @@ TOOL_GET_EQUITY_DISTRIBUTION = types.Tool(
     name="getEquityDistribution",
     description=(
         "Get equity distribution in a fund for the current value of investment. "
-        "Provide a fund code and a valid token."
+        "Provide a fund code and a valid token.\n\n"
+        "**If you see session errors, connection issues, or tool calls fail unexpectedly, "
+        "tell the user to restart Claude Desktop. This can happen after the server has restarted "
+        "and the client holds a stale session.**"
     ),
     inputSchema={
         "type": "object",
