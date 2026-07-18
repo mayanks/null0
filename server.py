@@ -54,6 +54,7 @@ import contextlib
 import json
 import os
 import time
+from pathlib import Path
 from typing import Any, AsyncIterator
 
 import httpx
@@ -71,7 +72,7 @@ from starlette.applications import Starlette
 from starlette.middleware import Middleware
 from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
-from starlette.responses import JSONResponse, Response
+from starlette.responses import JSONResponse, PlainTextResponse, Response
 from starlette.routing import Mount, Route
 from starlette.staticfiles import StaticFiles
 from starlette.types import ASGIApp, Receive, Scope, Send
@@ -312,9 +313,22 @@ class CachedStaticFiles(StaticFiles):
 # Routes
 # ---------------------------------------------------------------------------
 
+_VERSION_FILE = Path(__file__).parent / "VERSION"
+
+
+def read_version() -> str:
+    try:
+        return _VERSION_FILE.read_text(encoding="utf-8").strip()
+    except OSError:
+        return "unknown"
+
 
 async def health(request: Request) -> JSONResponse:
     return JSONResponse({"status": "ok"})
+
+
+async def version_info(request: Request) -> PlainTextResponse:
+    return PlainTextResponse(read_version())
 
 
 async def privacy_page(request: Request) -> Response:
@@ -423,6 +437,7 @@ class _StreamableHTTPApp:
 # Route order: health → sse → mcp → static
 routes = [
     Route("/health", endpoint=health, methods=["GET"]),
+    Route("/version", endpoint=version_info, methods=["GET"]),
     # /privacy and /about served explicitly — StaticFiles html=True only serves index.html for /
     Route("/privacy", endpoint=privacy_page, methods=["GET"]),
     Route("/about", endpoint=about_page, methods=["GET"]),

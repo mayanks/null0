@@ -1,6 +1,17 @@
 var SERVER_HOST = 'kuvera.mayanks.me';
 
 document.addEventListener('DOMContentLoaded', function () {
+  fetch('/version')
+    .then(function (r) { return r.text(); })
+    .then(function (v) {
+      var version = v.trim();
+      if (!version) return;
+      document.querySelectorAll('[data-app-version]').forEach(function (el) {
+        el.textContent = version;
+      });
+    })
+    .catch(function () {});
+
   // Replace placeholder URLs — any element with data-server-url gets its
   // text content rewritten with the actual host.
   document.querySelectorAll('[data-server-url]').forEach(function (el) {
