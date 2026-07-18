@@ -98,6 +98,7 @@ from tools.portfolio import (
     handle_get_portfolios,
     handle_switch_portfolio,
 )
+from audit_log import append_audit_entry
 from kuvera_client import KuveraClient
 
 load_dotenv()
@@ -180,11 +181,20 @@ async def list_tools() -> list[types.Tool]:
     return _ALL_TOOLS
 
 
+def _audit_tool_call(tool_name: str, arguments: dict[str, Any]) -> None:
+    """Append tool invocation to the CSV audit log using email from the JWT."""
+    token = arguments.get("token", "")
+    email = KuveraClient.email_from_token(token)
+    if email:
+        append_audit_entry(email, tool_name)
+
+
 @mcp_server.call_tool()
 async def call_tool(name: str, arguments: dict[str, Any]) -> list[types.TextContent]:
     handler = _TOOL_DISPATCH.get(name)
     if handler is None:
         return [types.TextContent(type="text", text=f"Error: Unknown tool '{name}'")]
+    _audit_tool_call(name, arguments)
     result = await handler(arguments)
     # result is {"content": [{"type": "text", "text": ...}]}
     content = result.get("content", [])

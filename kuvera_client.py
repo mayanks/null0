@@ -91,6 +91,21 @@ class KuveraClient:
             return None
 
     @staticmethod
+    def email_from_token(token: str) -> str | None:
+        """Extract the user email claim from a Kuvera JWT, if present."""
+        if not KuveraClient.validate_jwt_format(token):
+            return None
+        payload = KuveraClient.decode_jwt_payload(token)
+        if not payload:
+            return None
+        email = payload.get("email")
+        if isinstance(email, str):
+            email = email.strip()
+            if email:
+                return email
+        return None
+
+    @staticmethod
     def validate_jwt_format(token: str) -> bool:
         """Return True iff *token* looks structurally like a JWT.
 

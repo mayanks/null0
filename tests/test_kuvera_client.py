@@ -2,6 +2,7 @@
 Unit tests for KuveraClient — all httpx calls mocked via respx.
 """
 
+import base64
 import json
 import logging
 from unittest.mock import AsyncMock, MagicMock
@@ -20,6 +21,12 @@ BASE = "https://api.kuvera.in"
 VALID_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIn0.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
 
 
+def _jwt_with_payload(payload: dict) -> str:
+    header = base64.urlsafe_b64encode(b'{"alg":"HS256","typ":"JWT"}').rstrip(b"=").decode()
+    body = base64.urlsafe_b64encode(json.dumps(payload).encode()).rstrip(b"=").decode()
+    return f"{header}.{body}.signature"
+
+
 def make_client() -> tuple[KuveraClient, httpx.AsyncClient]:
     """Return (KuveraClient, httpx.AsyncClient) pair wired to BASE."""
     http = httpx.AsyncClient(base_url=BASE)
@@ -29,6 +36,22 @@ def make_client() -> tuple[KuveraClient, httpx.AsyncClient]:
 # ---------------------------------------------------------------------------
 # validate_jwt_format
 # ---------------------------------------------------------------------------
+
+
+class TestEmailFromToken:
+    def test_extracts_email_claim(self):
+        token = _jwt_with_payload({"sub": "1", "email": "user@example.com"})
+        assert KuveraClient.email_from_token(token) == "user@example.com"
+
+    def test_strips_whitespace(self):
+        token = _jwt_with_payload({"email": "  user@example.com  "})
+        assert KuveraClient.email_from_token(token) == "user@example.com"
+
+    def test_missing_email_returns_none(self):
+        assert KuveraClient.email_from_token(VALID_TOKEN) is None
+
+    def test_invalid_token_returns_none(self):
+        assert KuveraClient.email_from_token("not-a-jwt") is None
 
 
 class TestValidateJwtFormat:
