@@ -1,4 +1,4 @@
-var SERVER_HOST = 'kuvera.mayanks.me';
+var SERVER_HOST = 'kuvera.hashmap.in';
 
 document.addEventListener('DOMContentLoaded', function () {
   fetch('/version')
