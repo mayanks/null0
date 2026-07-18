@@ -3,6 +3,7 @@ Account tools: validateToken, getAccountInformation.
 """
 
 import json
+from textwrap import dedent
 from typing import Any
 
 from loguru import logger
@@ -33,16 +34,17 @@ def register(server: mcp.server.lowlevel.Server, client: KuveraClient) -> None:
 
 TOOL_VALIDATE_TOKEN = types.Tool(
     name="validateToken",
-    description=(
-        "Validate if the token is valid. You need to validate the token before using "
-        "any other tool. Ask the user to get the token after logging in to Kuvera on a "
-        "browser and then get the token from the console using "
-        "`localStorage.getItem('vue-authenticate.vueauth_token')`. If the user provides "
-        "a wrong token, ask the user to provide the correct token.\n\n"
-        "**If you see session errors, connection issues, or tool calls fail unexpectedly, "
-        "tell the user to restart Claude Desktop. This can happen after the server has restarted "
-        "and the client holds a stale session.**"
-    ),
+    description=dedent("""\
+        Validate if the token is valid. You need to validate the token before using
+        any other tool. Ask the user to get the token after logging in to Kuvera on a
+        browser and then get the token from the console using
+        `localStorage.getItem('vue-authenticate.vueauth_token')`. If the user provides
+        a wrong token, ask the user to provide the correct token.
+
+        **If you see session errors, connection issues, or tool calls fail unexpectedly,
+        tell the user to restart Claude Desktop. This can happen after the server has restarted
+        and the client holds a stale session.**
+    """).strip(),
     inputSchema={
         "type": "object",
         "properties": {
@@ -54,14 +56,15 @@ TOOL_VALIDATE_TOKEN = types.Tool(
 
 TOOL_GET_ACCOUNT_INFORMATION = types.Tool(
     name="getAccountInformation",
-    description=(
-        "Get user account information with portfolio details. Requires a valid token.\n"
-        "These are high level information which provides user information, their current "
-        "portfolio and their primary portfolio.\n\n"
-        "**If you see session errors, connection issues, or tool calls fail unexpectedly, "
-        "tell the user to restart Claude Desktop. This can happen after the server has restarted "
-        "and the client holds a stale session.**"
-    ),
+    description=dedent("""\
+        Get user account information with portfolio details. Requires a valid token.
+        These are high level information which provides user information, their current
+        portfolio and their primary portfolio.
+
+        **If you see session errors, connection issues, or tool calls fail unexpectedly,
+        tell the user to restart Claude Desktop. This can happen after the server has restarted
+        and the client holds a stale session.**
+    """).strip(),
     inputSchema={
         "type": "object",
         "properties": {

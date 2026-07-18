@@ -353,6 +353,32 @@ HOLDINGS_RESPONSE = {
     ]
 }
 
+HOLDINGS_WITH_SIPS_RESPONSE = {
+    "FUND001": [
+        {
+            "folioNumber": "123456/01",
+            "units": 100.0,
+            "allottedAmount": 9000.0,
+            "sips": [
+                {
+                    "type": "sip",
+                    "amount": 5000,
+                    "bse_placed_order_date": "2024-01-15",
+                    "frequency": "MONTHLY",
+                    "start_date": "2024-01-01",
+                },
+                {
+                    "type": "stp",
+                    "amount": 1000,
+                    "bse_placed_order_date": "2024-02-01",
+                    "frequency": "MONTHLY",
+                    "start_date": "2024-02-01",
+                },
+            ],
+        }
+    ]
+}
+
 
 @pytest.mark.asyncio
 async def test_get_holdings_happy_path():
@@ -370,6 +396,30 @@ async def test_get_holdings_happy_path():
     assert result[0]["code"] == "FUND001"
     assert result[0]["units"] == 100.0
     assert result[0]["current_value"] == 100.0 * 100.0  # units * nav
+    assert "sips" not in result[0]
+
+
+@pytest.mark.asyncio
+async def test_get_holdings_filters_sip_type():
+    with respx.mock(base_url=BASE) as mock:
+        mock.get("/api/v3/portfolio/holdings.json").mock(
+            return_value=httpx.Response(200, json=HOLDINGS_WITH_SIPS_RESPONSE)
+        )
+        mock.get("/mf/api/v5/fund_schemes/FUND001.json").mock(
+            return_value=httpx.Response(200, json=FUND_DETAILS_RESPONSE)
+        )
+        client, http = make_client()
+        async with http:
+            result = await client.get_holdings(VALID_TOKEN)
+    assert len(result) == 1
+    assert result[0]["sips"] == [
+        {
+            "amount": 5000,
+            "bse_placed_order_date": "2024-01-15",
+            "frequency": "MONTHLY",
+            "start_date": "2024-01-01",
+        }
+    ]
 
 
 @pytest.mark.asyncio

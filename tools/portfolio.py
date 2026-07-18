@@ -4,6 +4,7 @@ Portfolio tools: getPortfolios, getPortfolioPerformance, switchPortfolio.
 
 import json
 import re
+from textwrap import dedent
 from typing import Any
 
 from loguru import logger
@@ -16,16 +17,17 @@ _PORTFOLIO_ID_RE = re.compile(r"^\d{1,10}$")
 
 TOOL_GET_PORTFOLIOS = types.Tool(
     name="getPortfolios",
-    description=(
-        "Get list of all portfolios with detailed information. Requires a valid token.\n"
-        "Portfolio is a Kuvera terminology. It means an investment account. A user can "
-        "have multiple portfolios. A portfolio can be single or joint. If "
-        "`onboarding_form_status` is 13, the user can invest in mutual funds. Else the "
-        "account is not active.\n\n"
-        "**If you see session errors, connection issues, or tool calls fail unexpectedly, "
-        "tell the user to restart Claude Desktop. This can happen after the server has restarted "
-        "and the client holds a stale session.**"
-    ),
+    description=dedent("""\
+        Get list of all portfolios with detailed information. Requires a valid token.
+        Portfolio is a Kuvera terminology. It means an investment account. A user can
+        have multiple portfolios. A portfolio can be single or joint. If
+        `onboarding_form_status` is 13, the user can invest in mutual funds. Else the
+        account is not active.
+
+        **If you see session errors, connection issues, or tool calls fail unexpectedly,
+        tell the user to restart Claude Desktop. This can happen after the server has restarted
+        and the client holds a stale session.**
+    """).strip(),
     inputSchema={
         "type": "object",
         "properties": {
@@ -37,12 +39,13 @@ TOOL_GET_PORTFOLIOS = types.Tool(
 
 TOOL_GET_PORTFOLIO_PERFORMANCE = types.Tool(
     name="getPortfolioPerformance",
-    description=(
-        "Get performance data for all user portfolios. Requires a valid token.\n\n"
-        "**If you see session errors, connection issues, or tool calls fail unexpectedly, "
-        "tell the user to restart Claude Desktop. This can happen after the server has restarted "
-        "and the client holds a stale session.**"
-    ),
+    description=dedent("""\
+        Get performance data for all user portfolios. Requires a valid token.
+
+        **If you see session errors, connection issues, or tool calls fail unexpectedly,
+        tell the user to restart Claude Desktop. This can happen after the server has restarted
+        and the client holds a stale session.**
+    """).strip(),
     inputSchema={
         "type": "object",
         "properties": {
@@ -54,14 +57,15 @@ TOOL_GET_PORTFOLIO_PERFORMANCE = types.Tool(
 
 TOOL_SWITCH_PORTFOLIO = types.Tool(
     name="switchPortfolio",
-    description=(
-        "Switch the current active portfolio to a different portfolio. After switching, "
-        "the `current_portfolio` in account information updates and all subsequent "
-        "operations reflect the new portfolio context.\n\n"
-        "**If you see session errors, connection issues, or tool calls fail unexpectedly, "
-        "tell the user to restart Claude Desktop. This can happen after the server has restarted "
-        "and the client holds a stale session.**"
-    ),
+    description=dedent("""\
+        Switch the current active portfolio to a different portfolio. After switching,
+        the `current_portfolio` in account information updates and all subsequent
+        operations reflect the new portfolio context.
+
+        **If you see session errors, connection issues, or tool calls fail unexpectedly,
+        tell the user to restart Claude Desktop. This can happen after the server has restarted
+        and the client holds a stale session.**
+    """).strip(),
     inputSchema={
         "type": "object",
         "properties": {
